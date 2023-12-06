@@ -6,7 +6,6 @@ from sh import ansible_galaxy, grep, sed
 import pty
 from argparse import ArgumentParser
 
-
 parser = ArgumentParser(description="Run ansible role in collection")
 parser.add_argument("fqcn",
                     help="Fully qualified collection name (namespace.collection.role)")
@@ -22,12 +21,12 @@ parser.add_argument('--debug',
 # so we need to replace parameter starting with - and -- with DELMINUS
 i = 0
 for i in range(len(sys.argv[2:])):
-    arg = sys.argv[i+2]
+    arg = sys.argv[i + 2]
     if arg[0] == "-":
         if arg[1] == "-":
-            sys.argv[i+2] = sys.argv[i+2][0] + 'DELMINUS' + sys.argv[i+2][2:]
-        sys.argv[i+2] = 'DELMINUS' + sys.argv[i+2][1:]
-    i+=1
+            sys.argv[i + 2] = sys.argv[i + 2][0] + 'DELMINUS' + sys.argv[i + 2][2:]
+        sys.argv[i + 2] = 'DELMINUS' + sys.argv[i + 2][1:]
+    i += 1
 
 # parse arguments
 args = parser.parse_args()
@@ -36,7 +35,8 @@ args = parser.parse_args()
 i = 0
 for i in range(len(args.ansible_args)):
     args.ansible_args[i] = args.ansible_args[i].replace("DELMINUS", "-")
-    i+=1
+    i += 1
+
 
 def get_collection_dir(namespace_collection):
     if not ansible_galaxy("collection", "list", f"{namespace_collection}"):
@@ -47,6 +47,7 @@ def get_collection_dir(namespace_collection):
     collection_basedir = collection_basedir.replace("\n", "")
     collection_dir = f'{collection_basedir}/{namespace_collection.replace(".", "/")}'
     return collection_dir
+
 
 def parse_ansible_fqcn():
     # check fqcn syntax
@@ -63,7 +64,6 @@ def parse_ansible_fqcn():
     # get local directory for collection
     collection_dir = get_collection_dir(namespace_collection)
 
-
     if args.debug:
         print(f"Found collection: {collection_dir}")
 
@@ -71,7 +71,6 @@ def parse_ansible_fqcn():
     if not os.path.isdir(f"{collection_dir}/roles/{role_name}"):
         print(f"Collection {namespace_collection} does not contain role {role_name} - exit!")
         exit(1)
-
 
     if args.debug:
         print(f"Found role {collection_dir}/roles/{role_name}")
@@ -105,6 +104,7 @@ def main():
     def read(fd):
         data = os.read(fd, 1024)
         return data
+
     cmd = ["ansible-playbook", playbook] + args.ansible_args
     pty.spawn(cmd, read)
 
