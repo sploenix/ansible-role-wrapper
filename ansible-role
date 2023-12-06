@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# managed by ansible role sploenix.ansible.setup
 
 import sys
 import os
