@@ -39,7 +39,7 @@ for i in range(len(ARGS.ansible_args)):
     i += 1
 
 
-class Playbook():
+class Playbook:
     tmpfile = None
     name = None
 
