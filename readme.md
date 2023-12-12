@@ -11,3 +11,15 @@ Symlink the wrapper to a directory in your PATH and use it like **ansible-playbo
 ```bash
 ansible-role <role fqcn> [ansible-playbook options]
 ```
+
+## Requirements
+
+### Pip
+
+```bash
+pip install -r requirements.txt
+```
+
+### OS specific
+
+To use distribution specific python packages, you need to install the packages listed in the **requirements.txt** file.
