@@ -73,7 +73,13 @@ def get_collection_dir(namespace_collection):
         print(f"Collection {namespace_collection} not found - exit!")
         exit(1)
     else:
-        collection_basedir = sed(grep(ansible_galaxy("collection", "list", f"{namespace_collection}"), "# /"), "s/# //")
+        collection_basedir = sed(
+            "s/# //",
+            _in=grep(
+                "# /",
+                _in=ansible_galaxy("collection", "list", f"{namespace_collection}"),
+            ),
+        )
     collection_basedir = collection_basedir.replace("\n", "")
     collection_dir = f'{collection_basedir}/{namespace_collection.replace(".", "/")}'
     return collection_dir
