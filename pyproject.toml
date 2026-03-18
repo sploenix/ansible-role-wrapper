@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ansible-role-wrapper"
+version = "0.1.0"
+description = "Wrapper around ansible-playbook to run standalone roles from collections"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+dependencies = [
+  "sh",
+]
+
+[tool.setuptools]
+script-files = ["ansible-role"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.6",
+]
+
+[tool.ruff]
+exclude = ["docs", "tests"]
+line-length = 88                    # Maximum line length
+target-version = "py313"            # Python version for compatibility
+indent-width = 4  # Same as autopep8 default
+
+[tool.ruff.format]
+quote-style = "double"  # Or "single" if you prefer
+indent-style = "space"  # Use spaces instead of tabs
+line-ending = "lf"  # Keep consistency
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"]       # Essential rules: errors, warnings, imports
+ignore = ["E501"]                   # Line length handled by formatter
